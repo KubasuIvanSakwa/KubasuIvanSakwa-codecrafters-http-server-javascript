@@ -1,17 +1,14 @@
 const net = require("net");
-const http = require('node:http')
 
 // You can use print statements as follows for debugging, they'll be visible when running tests.
 console.log("Logs from your program will appear here!");
-const options = {
-  host: "localhost",
-  port: 4221,
-};
-const req = http.get(options)
 
 // TODO: Uncomment the code below to pass the first stage
-const server = net.createServer((socket) => {
-  console.log(req)
+const server = net.createServer((socket, req, res) => {
+  if(req.method === 'GET') {
+    res.writeHead(200, {'Host': 'localhost:4221'})
+    res.end('HTTP/1.1 200 OK\r\n\r\n')
+  }
   socket.on("close", () => {
     socket.end();
   });
