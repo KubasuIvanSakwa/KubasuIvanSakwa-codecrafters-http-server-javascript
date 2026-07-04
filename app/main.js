@@ -18,7 +18,7 @@ const server = net.createServer((socket) => {
     socket.end();
   });
   
-  socket.write('HTTP/1.1 200 OK\r\n\r\n')
+  // socket.write('HTTP/1.1 200 OK\r\n\r\n')
 })
 
 
