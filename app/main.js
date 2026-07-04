@@ -4,17 +4,13 @@ const net = require("net");
 console.log("Logs from your program will appear here!");
 
 // TODO: Uncomment the code below to pass the first stage
-const server = net.createServer({ port: 4221 }, (socket) => {
+const server = net.createServer((socket, req, res) => {
+  console.log(req)
   socket.on("close", () => {
     socket.end();
   });
   
   socket.write('HTTP/1.1 200 OK\r\n\r\n')
-  
-  socket.on('error', (err) => {
-    console.log('HTTP/1.1 404 Not Found\r\n\r\n')
-    socket.end()
-  })
 });
 
 
