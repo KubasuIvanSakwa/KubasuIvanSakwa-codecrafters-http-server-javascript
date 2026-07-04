@@ -5,16 +5,15 @@ console.log("Logs from your program will appear here!");
 
 // TODO: Uncomment the code below to pass the first stage
 const server = net.createServer((socket) => {
-  socket.on("close", (req, res) => {
-    res.writeHead(200, {'Host': '/index.html'})
-    socket.end(JSON.stringify({
-      data: 'HTTP/1.1 200 OK\r\n\r\n'
-    }));
+  socket.on("close", () => {
+    socket.end();
   });
   // socket.write('HTTP/1.1 200 OK\r\n\r\n')
-  socket.on('clientError', () => {
-    socket.enf('HTTP/1.1 404 Not Found\r\n\r\n')
+  socket.on("error", () => {
+    socket.write('HTTP/1.1 404 Not Found\r\n\r\n')
   })
 });
 
-server.listen(4221, "localhost");
+server.listen(4221, "localhost", () => {
+  server.write('HTTP/1.1 200 OK\r\n\r\n')
+});
