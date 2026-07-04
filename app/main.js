@@ -7,7 +7,7 @@ console.log("Logs from your program will appear here!");
 const server = net.createServer((socket) => {
 
   socket.on("data", (data) => {
-    console.log(JSON.parse(data.toString()))
+    console.log(JSON.parse(data))
     // const req = data.toString()
     socket.end()
   })
