@@ -5,6 +5,7 @@ const http = require('node:http')
 console.log("Logs from your program will appear here!");
 const options = {
   host: "localhost",
+  port: 4221,
 };
 const req = http.get(options)
 
