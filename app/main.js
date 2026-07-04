@@ -4,10 +4,10 @@ const net = require("net");
 console.log("Logs from your program will appear here!");
 
 // TODO: Uncomment the code below to pass the first stage
-const server = net.createServer((socket, req, res) => {
-  if(req.method === 'GET') {
-    res.writeHead(200, {'Host': 'localhost:4221'})
-    res.end('HTTP/1.1 200 OK\r\n\r\n')
+const server = net.createServer((socket) => {
+  if(socket.method === 'GET') {
+    socket.write('HTTP/1.1 200 OK\r\n\r\n')
+    socket.end()
   }
   socket.on("close", () => {
     socket.end();
