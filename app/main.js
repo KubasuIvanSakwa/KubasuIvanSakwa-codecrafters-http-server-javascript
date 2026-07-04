@@ -5,7 +5,7 @@ console.log("Logs from your program will appear here!");
 
 // TODO: Uncomment the code below to pass the first stage
 const server = net.createServer((socket) => {
-  console.log(socket.req())
+  
   socket.on("close", () => {
     socket.end();
   });
@@ -14,4 +14,6 @@ const server = net.createServer((socket) => {
 });
 
 
-server.listen(4221, "localhost");
+server.listen(4221, "localhost", (res,req) => {
+  console.log(req)
+});
