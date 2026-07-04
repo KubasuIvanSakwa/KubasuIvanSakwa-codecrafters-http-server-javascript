@@ -9,11 +9,12 @@ const server = net.createServer({ port: 4221 }, (socket) => {
     socket.write('HTTP/1.1 200 OK\r\n\r\n')
     socket.end();
   });
+  
+  server.on('error', (err) => {
+    console.log('HTTP/1.1 404 Not Found\r\n\r\n')
+    server.end()
+  })
 });
 
-server.on('error', (err) => {
-  console.log('HTTP/1.1 404 Not Found\r\n\r\n')
-  server.end()
-})
 
 server.listen(4221, "localhost");
