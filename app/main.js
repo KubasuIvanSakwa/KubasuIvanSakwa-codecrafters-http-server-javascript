@@ -28,7 +28,7 @@ const server = net.createServer((socket) => {
         } else if(str){
             socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${str[1].length}\r\n\r\n${str[1]}`)
         } else if(url === '/user-agent' && MATCHUSERAGENT) {
-            socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${MATCHUSERAGENT[1]}\r\n\r\n${MATCHUSERAGENT[1]}`)
+            socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${MATCHUSERAGENT[1].length}\r\n\r\n${MATCHUSERAGENT[1]}`)
         } else socket.write('HTTP/1.1 404 Not Found\r\n\r\n')
       }
     }
