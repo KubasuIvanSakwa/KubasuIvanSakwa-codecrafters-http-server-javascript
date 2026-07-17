@@ -22,10 +22,13 @@ const server = net.createServer((socket) => {
       const str = SEARCHSTRING.exec(url)
       console.log(str)
       console.log(url)
+      const newstr = url.split("/")
       if(method === 'GET') {
         if(url !== '/'){
           // socket.write('HTTP/1.1 404 Not Found\r\n\r\n')
-          socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${str[1].length}\r\n\r\n${str[1]}`)
+          if(str){
+            socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${str[1].length}\r\n\r\n${str[1]}`)
+          } else socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${newstr[1].length}\r\n\r\n${newstr[1]}`)
         } else socket.write('HTTP/1.1 200 OK\r\n\r\n')
       }
     }
