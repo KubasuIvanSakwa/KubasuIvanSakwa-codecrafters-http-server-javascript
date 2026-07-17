@@ -11,9 +11,10 @@ const server = net.createServer((socket) => {
     const requestString = data.toString()
     const URLREGEX = /(GET|PUT|DELETE|POST)\s([^\s\r\n]*)/
     const SEARCHSTRING = /\/\w+\/(.*)/
-
+    const USERAGENTREGEX = /User-Agent:\s([^\r\n]*)/
  
     const MATCH = URLREGEX.exec(requestString)
+    const MATCHUSERAGENT = USERAGENTREGEX.exec(requestString)
 
     // console.log(MATCH)
     if(MATCH) {
@@ -22,11 +23,13 @@ const server = net.createServer((socket) => {
       const str = SEARCHSTRING.exec(url)
       
       if(method === 'GET') {
-        if(url !== '/'){
-          if(str){
+        if(url === '/'){
+          socket.write('HTTP/1.1 200 OK\r\n\r\n')
+        } else if(str){
             socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${str[1].length}\r\n\r\n${str[1]}`)
-          } else socket.write('HTTP/1.1 404 Not Found\r\n\r\n')
-        } else socket.write('HTTP/1.1 200 OK\r\n\r\n')
+        } else if(url === '/user-agent' && MATCHUSERAGENT) {
+            socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${MATCHUSERAGENT[1]}\r\n\r\n${MATCHUSERAGENT[1]}`)
+        } else socket.write('HTTP/1.1 404 Not Found\r\n\r\n')
       }
     }
     socket.end()
