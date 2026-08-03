@@ -1,7 +1,5 @@
-import { existsSync } from 'node:fs';
-import { readFileSync } from 'node:fs';
-
-const net = require("net");
+const fs = require('node:fs')
+const net = require('net');
 const process = require('node:process')
 
 
@@ -39,9 +37,9 @@ const server = net.createServer((socket) => {
             const filename = url.split("/files/")[1];
             const filePath = `../${directory}/${filename}`;
             
-            if (existsSync(filePath)) {
+            if (fs.existsSync(filePath)) {
                 // Respond with the file content
-                const content = readFileSync(filePath).toString();
+                const content = fs.readFileSync(filePath).toString();
                 const res = `HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: ${Buffer.byteLength(content)}\r\n\r\n${content}`;
                 socket.write(res);
                 socket.end();
