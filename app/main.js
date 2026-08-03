@@ -1,8 +1,10 @@
 const net = require("net");
+const fs = require('node:fs/promises')
+const process = require('node:process')
+
+const path = require('node:path')
 
 // You can use print statements as follows for debugging, they'll be visible when running tests.
-console.log("Logs from your program will appear here!");
-
 // TODO: Uncomment the code below to pass the first stage
 const server = net.createServer((socket) => {
 
@@ -13,10 +15,10 @@ const server = net.createServer((socket) => {
     const SEARCHSTRING = /\/\w+\/(.*)/
     const USERAGENTREGEX = /User-Agent:\s([^\r\n]*)/
     const DIRECTORYREGEX = /--directory\s([^\s])/
- 
+    
     const MATCH = URLREGEX.exec(requestString)
     const MATCHUSERAGENT = USERAGENTREGEX.exec(requestString)
-    const directory = DIRECTORYREGEX.exec(requestString)
+    // const directory = DIRECTORYREGEX.exec(requestString)
 
     // console.log(MATCH)
     if(MATCH) {
@@ -31,8 +33,9 @@ const server = net.createServer((socket) => {
             socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${str[1].length}\r\n\r\n${str[1]}`)
         } else if(url === '/user-agent' && MATCHUSERAGENT) {
             socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${MATCHUSERAGENT[1].length}\r\n\r\n${MATCHUSERAGENT[1]}`)
-        } else if(directory) {
-          socket.write("directory")
+        } else if(url.includes('/files/')) {
+          const directory = process.argv[3]
+          console.log(directory)
         } else socket.write('HTTP/1.1 404 Not Found\r\n\r\n')
       }
     }
