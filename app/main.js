@@ -1,10 +1,8 @@
-const net = require("net");
-const readline = require("readline");
-// const fs = require('node:fs/promises')
 import { existsSync } from 'node:fs';
 import { readFileSync } from 'node:fs';
+
+const net = require("net");
 const process = require('node:process')
-const path = require('node:path')
 
 
 // You can use print statements as follows for debugging, they'll be visible when running tests.
