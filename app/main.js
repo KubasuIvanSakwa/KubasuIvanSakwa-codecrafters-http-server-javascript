@@ -25,6 +25,7 @@ const server = net.createServer((socket) => {
       const method = MATCH[1]
       const url = MATCH[2]
       const str = SEARCHSTRING.exec(url)
+      console.log(url)
       
       if(method === 'GET') {
         if(url === '/'){
