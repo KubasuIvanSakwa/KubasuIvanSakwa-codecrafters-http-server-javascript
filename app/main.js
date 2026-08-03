@@ -42,7 +42,7 @@ const server = net.createServer((socket) => {
       const method = MATCH[1]
       const url = MATCH[2]
       const str = SEARCHSTRING.exec(url)
-      console.log(url)
+      // console.log(url)
       
       if(method === 'GET') {
         if(url === '/'){
@@ -52,8 +52,7 @@ const server = net.createServer((socket) => {
         } else if(url === '/user-agent' && MATCHUSERAGENT) {
             socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${MATCHUSERAGENT[1].length}\r\n\r\n${MATCHUSERAGENT[1]}`)
         } else if(url.includes('/files/')) {
-          const directory = process.argv[3]
-          console.log(directory)
+            socket.write(`HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: 13\r\n\r\nHello, World!`)
         } else socket.write('HTTP/1.1 404 Not Found\r\n\r\n')
       }
     }
