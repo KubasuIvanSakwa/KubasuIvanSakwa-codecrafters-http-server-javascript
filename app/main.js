@@ -12,9 +12,11 @@ const server = net.createServer((socket) => {
     const URLREGEX = /(GET|PUT|DELETE|POST)\s([^\s\r\n]*)/
     const SEARCHSTRING = /\/\w+\/(.*)/
     const USERAGENTREGEX = /User-Agent:\s([^\r\n]*)/
+    const DIRECTORYREGEX = /--directory\s([^\s])/
  
     const MATCH = URLREGEX.exec(requestString)
     const MATCHUSERAGENT = USERAGENTREGEX.exec(requestString)
+    const directory = DIRECTORYREGEX.exec(requestString)
 
     // console.log(MATCH)
     if(MATCH) {
@@ -29,6 +31,8 @@ const server = net.createServer((socket) => {
             socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${str[1].length}\r\n\r\n${str[1]}`)
         } else if(url === '/user-agent' && MATCHUSERAGENT) {
             socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${MATCHUSERAGENT[1].length}\r\n\r\n${MATCHUSERAGENT[1]}`)
+        } else if(directory) {
+          socket.write("directory")
         } else socket.write('HTTP/1.1 404 Not Found\r\n\r\n')
       }
     }
